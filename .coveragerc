@@ -1,0 +1,7 @@
+[run]
+omit =
+    launcher.py
+    conftest.py
+    tests/*
+    __init__.py
+    __main__.py

@@ -34,11 +34,7 @@ class PageTestMixin:
 
     def test_url(self, page):
         page.path = 'test'
-        page.params = {}
         assert page.url == f'{page.BASE_URL}test'
-
-        page.params = {'q': 'test'}
-        assert page.url == f'{page.BASE_URL}test?q=test'
 
     def test_parse_failed(self, page):
         page.is_fetched = False

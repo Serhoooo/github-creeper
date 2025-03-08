@@ -1,5 +1,5 @@
 import logging
-from urllib.parse import urljoin, urlencode
+from urllib.parse import urljoin
 
 from lxml.etree import HTML
 import requests
@@ -19,13 +19,10 @@ class AbstractGitHubPage:
 
     @property
     def url(self):
-        url = urljoin(self.BASE_URL, self.path)
-        if self.params:
-            return f'{url}?{urlencode(self.params)}'
-        return url
+        return urljoin(self.BASE_URL, self.path)
 
     def fetch(self, session: requests.Session):
-        response = session.get(self.url)
+        response = session.get(self.url, params=self.params)
 
         if not response.ok:
             logger.error(f'Failed to fetch {self.url}')

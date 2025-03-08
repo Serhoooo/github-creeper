@@ -49,13 +49,16 @@ class AbstractGitHubPage:
 
 
 class GitHubSearchPage(AbstractGitHubPage):
-    LINKS_XPATH = '//a[@class="prc-Link-Link-85e08"]'
+    SEARCH_RESULT_XPATH = '//*[contains(@class, "search-title")]'
 
     def _parse(self):
         self.parse_results = []
 
-        for match in HTML(self.page_content).xpath(self.LINKS_XPATH):
-            self.parse_results.append({'url': match.get('href')})
+        for result in HTML(self.page_content).xpath(self.SEARCH_RESULT_XPATH):
+            a_elements = result.xpath('.//a')
+            if not a_elements:
+                continue
+            self.parse_results.append({'url': a_elements[0].get('href')})
 
     @property
     def absolute_urls(self):
